@@ -18,8 +18,8 @@ The Fuel Optimizer API calculates optimal fuel stops along a route between two U
 
 1. **Clone and navigate to project:**
 ```bash
-git clone <your-repo>
-cd fuel-optimizer-api
+git clone <the-repo>
+cd fuel_optimizer_api
 ```
 
 2. **Create environment file:**
