@@ -1,0 +1,51 @@
+version: '3.9'
+
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: fuel_optimizer
+      POSTGRES_USER: fueluser
+      POSTGRES_PASSWORD: supersecretpassword
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U fueluser -d fuel_optimizer"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+
+  web:
+    build: .
+    command: gunicorn fuel_optimizer.wsgi:application --bind 0.0.0.0:8000 --workers 3 --timeout 120
+    volumes:
+      - .:/app
+      - static_volume:/app/staticfiles
+      - media_volume:/app/media
+    environment:
+      - DEBUG=0
+      - SECRET_KEY=change-me-in-production-please
+      - DATABASE_URL=postgres://fueluser:supersecretpassword@db:5432/fuel_optimizer
+      - REDIS_URL=redis://redis:6379/0
+      - FUEL_PRICES_CSV=/app/data/fuel-prices-for-be-assessment.csv
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_started
+    ports:
+      - "8000:8000"
+    # ADD THIS: Force Google DNS (fixes macOS/Linux resolution bugs)
+    dns:
+      - 8.8.8.8
+      - 8.8.4.4
+
+volumes:
+  postgres_data:
+  static_volume:
+  media_volume:
