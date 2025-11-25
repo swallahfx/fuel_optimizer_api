@@ -1,0 +1,57 @@
+
+# # Core Django and DRF packages
+# Django>=4.2.0,<5.0
+# djangorestframework>=3.14.0
+# drf-spectacular>=0.26.0
+
+# # Database and ORM optimizations
+# psycopg2-binary>=2.9.0  # for PostgreSQL (recommended for production)
+# # OR use mysql-connector-python for MySQL
+# # OR keep sqlite3 for development (built into Python)
+
+# # Data processing and external APIs
+# pandas>=2.0.0
+# requests>=2.28.0
+# folium>=0.14.0
+
+# # Caching (optional but recommended)
+# django-redis>=5.2.0
+# redis>=4.5.0
+
+# # Production optimization packages
+# gunicorn>=20.1.0  # WSGI server for production
+# whitenoise>=6.4.0  # Static files serving
+# django-cors-headers>=4.0.0  # CORS handling if needed
+
+# # Development and debugging (optional)
+# django-debug-toolbar>=4.0.0
+# django-extensions>=3.2.0
+
+# # Environment management
+# python-decouple>=3.8  # for environment variables
+
+
+# Core
+Django>=5.1,<5.3
+djangorestframework>=3.15
+drf-spectacular>=0.27
+
+# Database
+psycopg2-binary>=2.9.9          # PostgreSQL (used in Docker)
+dj-database-url>=2.1.0          # Parses DATABASE_URL automatically
+
+# Production server & static files
+gunicorn>=22.0
+whitenoise[brotli]>=6.6.0        # Must have [brotli] for best compression
+
+# Caching
+django-redis>=5.4.0             # Redis cache backend (used heavily for geocoding)
+
+# Data & maps
+pandas>=2.1
+numpy>=1.24
+folium>=0.15
+requests>=2.31
+
+# Optional but recommended
+python-decouple>=3.8            # Clean .env handling (optional, we use os.environ directly)
